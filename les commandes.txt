@@ -1,0 +1,356 @@
+Microsoft Windows [version 10.0.18363.1316]
+(c) 2019 Microsoft Corporation. Tous droits réservés.
+
+C:\Users\Utilisateur>mongo
+MongoDB shell version v4.4.3
+connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("fe060923-9f22-4c0c-8b45-3a4d7348c9ad") }
+MongoDB server version: 4.4.3
+---
+The server generated these startup warnings when booting:
+        2021-01-21T10:24:40.155+01:00: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+---
+---
+        Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+        metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+
+        The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+        and anyone you share the URL with. MongoDB may use this information to make product
+        improvements and to suggest MongoDB products and deployment options to you.
+
+        To enable free monitoring, run the following command: db.enableFreeMonitoring()
+        To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+---
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+mylib   0.000GB
+tutoDB  0.000GB
+> use contact
+switched to db contact
+> db.contactlis.insert({last_name:'Ben Lahmer',first_name:'Fares',email:'fares@gmail.com',age26})
+uncaught exception: ReferenceError: age26 is not defined :
+@(shell):1:89
+> db.contactlis.insert({last_name:'Ben Lahmer',first_name:'Fares',email:'fares@gmail.com',age:26})
+WriteResult({ "nInserted" : 1 })
+> db
+contact
+> db.contactlis.insert({last_name:'Kefi',first_name:'Seif',email:'kefi@gmail.com',age:15})
+WriteResult({ "nInserted" : 1 })
+> db.contactlis.insert({last_name:'Fatnassi',first_name:'Sarra',email:'sarra.f@gmail.com',age:40})
+WriteResult({ "nInserted" : 1 })
+> db.contactlis.insert({last_name:'Ben Yahia',first_name:'Rym',age:4})
+WriteResult({ "nInserted" : 1 })
+> db.contactlis.insert({last_name:'Cherif',first_name:'Sami',age:3})
+WriteResult({ "nInserted" : 1 })
+> db.contactlist.find()
+>
+> db.contactlis.find()
+{ "_id" : ObjectId("600a0250e29cb304782e77b2"), "last_name" : "Ben Lahmer", "first_name" : "Fares", "email" : "fares@gmail.com", "age" : 26 }
+{ "_id" : ObjectId("600a0296e29cb304782e77b3"), "last_name" : "Kefi", "first_name" : "Seif", "email" : "kefi@gmail.com", "age" : 15 }
+{ "_id" : ObjectId("600a02cae29cb304782e77b4"), "last_name" : "Fatnassi", "first_name" : "Sarra", "email" : "sarra.f@gmail.com", "age" : 40 }
+{ "_id" : ObjectId("600a033be29cb304782e77b5"), "last_name" : "Ben Yahia", "first_name" : "Rym", "age" : 4 }
+{ "_id" : ObjectId("600a0354e29cb304782e77b6"), "last_name" : "Cherif", "first_name" : "Sami", "age" : 3 }
+> db.contactlis.find().pretty()
+{
+        "_id" : ObjectId("600a0250e29cb304782e77b2"),
+        "last_name" : "Ben Lahmer",
+        "first_name" : "Fares",
+        "email" : "fares@gmail.com",
+        "age" : 26
+}
+{
+        "_id" : ObjectId("600a0296e29cb304782e77b3"),
+        "last_name" : "Kefi",
+        "first_name" : "Seif",
+        "email" : "kefi@gmail.com",
+        "age" : 15
+}
+{
+        "_id" : ObjectId("600a02cae29cb304782e77b4"),
+        "last_name" : "Fatnassi",
+        "first_name" : "Sarra",
+        "email" : "sarra.f@gmail.com",
+        "age" : 40
+}
+{
+        "_id" : ObjectId("600a033be29cb304782e77b5"),
+        "last_name" : "Ben Yahia",
+        "first_name" : "Rym",
+        "age" : 4
+}
+{
+        "_id" : ObjectId("600a0354e29cb304782e77b6"),
+        "last_name" : "Cherif",
+        "first_name" : "Sami",
+        "age" : 3
+}
+> db.contactlis.find({_id: ObjectId("600a0354e29cb304782e77b6")},null)
+{ "_id" : ObjectId("600a0354e29cb304782e77b6"), "last_name" : "Cherif", "first_name" : "Sami", "age" : 3 }
+> db.contactlis.find({age:{$gt: 18}}).pretty()
+{
+        "_id" : ObjectId("600a0250e29cb304782e77b2"),
+        "last_name" : "Ben Lahmer",
+        "first_name" : "Fares",
+        "email" : "fares@gmail.com",
+        "age" : 26
+}
+{
+        "_id" : ObjectId("600a02cae29cb304782e77b4"),
+        "last_name" : "Fatnassi",
+        "first_name" : "Sarra",
+        "email" : "sarra.f@gmail.com",
+        "age" : 40
+}
+> db.contactlis.find({$and: [{age:{$gt: 18}},{name:/ah/}}]).pretty()
+uncaught exception: SyntaxError: missing ] after element list :
+@(shell):1:54
+> db.contactlis.find({$and: [{age:{$gt: 18}},{name:/ah/}]).pretty()
+...
+...
+> db.contactlis.find({{age:{$gt: 18}},{name:/ah/}}).pretty()
+uncaught exception: SyntaxError: expected property name, got '{' :
+@(shell):1:20
+> db.contactlis.find({{age:{$gt: 18}},{last_name:/ah/}}).pretty()
+uncaught exception: SyntaxError: expected property name, got '{' :
+@(shell):1:20
+> db.contactlis.find({$and: [{age:{$gt: 18}},{last_name:/ah/}}]).pretty()
+uncaught exception: SyntaxError: missing ] after element list :
+@(shell):1:59
+> db.contactlis.find({$and: [{age:{$gt: 18}},{last_name:/ah/}]}).pretty()
+{
+        "_id" : ObjectId("600a0250e29cb304782e77b2"),
+        "last_name" : "Ben Lahmer",
+        "first_name" : "Fares",
+        "email" : "fares@gmail.com",
+        "age" : 26
+}
+> db.contactlis.update({last_name:'Kefi'},{$set: {first_name:'Anis'}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.contacts.find()
+> db.contactlis.find()
+{ "_id" : ObjectId("600a0250e29cb304782e77b2"), "last_name" : "Ben Lahmer", "first_name" : "Fares", "email" : "fares@gmail.com", "age" : 26 }
+{ "_id" : ObjectId("600a0296e29cb304782e77b3"), "last_name" : "Kefi", "first_name" : "Anis", "email" : "kefi@gmail.com", "age" : 15 }
+{ "_id" : ObjectId("600a02cae29cb304782e77b4"), "last_name" : "Fatnassi", "first_name" : "Sarra", "email" : "sarra.f@gmail.com", "age" : 40 }
+{ "_id" : ObjectId("600a033be29cb304782e77b5"), "last_name" : "Ben Yahia", "first_name" : "Rym", "age" : 4 }
+{ "_id" : ObjectId("600a0354e29cb304782e77b6"), "last_name" : "Cherif", "first_name" : "Sami", "age" : 3 }
+> db.contactlis.remove({age:{$lt: 5}})
+WriteResult({ "nRemoved" : 2 })
+> db.contactlis.find().pretty()
+{
+        "_id" : ObjectId("600a0250e29cb304782e77b2"),
+        "last_name" : "Ben Lahmer",
+        "first_name" : "Fares",
+        "email" : "fares@gmail.com",
+        "age" : 26
+}
+{
+        "_id" : ObjectId("600a0296e29cb304782e77b3"),
+        "last_name" : "Kefi",
+        "first_name" : "Anis",
+        "email" : "kefi@gmail.com",
+        "age" : 15
+}
+{
+        "_id" : ObjectId("600a02cae29cb304782e77b4"),
+        "last_name" : "Fatnassi",
+        "first_name" : "Sarra",
+        "email" : "sarra.f@gmail.com",
+        "age" : 40
+}
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Microsoft Windows [version 10.0.18363.1316]
+(c) 2019 Microsoft Corporation. Tous droits réservés.
+
+C:\Users\Utilisateur>mongo
+MongoDB shell version v4.4.3
+connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("fe060923-9f22-4c0c-8b45-3a4d7348c9ad") }
+MongoDB server version: 4.4.3
+---
+The server generated these startup warnings when booting:
+        2021-01-21T10:24:40.155+01:00: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+---
+---
+        Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+        metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+
+        The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+        and anyone you share the URL with. MongoDB may use this information to make product
+        improvements and to suggest MongoDB products and deployment options to you.
+
+        To enable free monitoring, run the following command: db.enableFreeMonitoring()
+        To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+---
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+mylib   0.000GB
+tutoDB  0.000GB
+> use contact
+switched to db contact
+> db.contactlis.insert({last_name:'Ben Lahmer',first_name:'Fares',email:'fares@gmail.com',age26})
+uncaught exception: ReferenceError: age26 is not defined :
+@(shell):1:89
+> db.contactlis.insert({last_name:'Ben Lahmer',first_name:'Fares',email:'fares@gmail.com',age:26})
+WriteResult({ "nInserted" : 1 })
+> db
+contact
+> db.contactlis.insert({last_name:'Kefi',first_name:'Seif',email:'kefi@gmail.com',age:15})
+WriteResult({ "nInserted" : 1 })
+> db.contactlis.insert({last_name:'Fatnassi',first_name:'Sarra',email:'sarra.f@gmail.com',age:40})
+WriteResult({ "nInserted" : 1 })
+> db.contactlis.insert({last_name:'Ben Yahia',first_name:'Rym',age:4})
+WriteResult({ "nInserted" : 1 })
+> db.contactlis.insert({last_name:'Cherif',first_name:'Sami',age:3})
+WriteResult({ "nInserted" : 1 })
+> db.contactlist.find()
+>
+> db.contactlis.find()
+{ "_id" : ObjectId("600a0250e29cb304782e77b2"), "last_name" : "Ben Lahmer", "first_name" : "Fares", "email" : "fares@gmail.com", "age" : 26 }
+{ "_id" : ObjectId("600a0296e29cb304782e77b3"), "last_name" : "Kefi", "first_name" : "Seif", "email" : "kefi@gmail.com", "age" : 15 }
+{ "_id" : ObjectId("600a02cae29cb304782e77b4"), "last_name" : "Fatnassi", "first_name" : "Sarra", "email" : "sarra.f@gmail.com", "age" : 40 }
+{ "_id" : ObjectId("600a033be29cb304782e77b5"), "last_name" : "Ben Yahia", "first_name" : "Rym", "age" : 4 }
+{ "_id" : ObjectId("600a0354e29cb304782e77b6"), "last_name" : "Cherif", "first_name" : "Sami", "age" : 3 }
+> db.contactlis.find().pretty()
+{
+        "_id" : ObjectId("600a0250e29cb304782e77b2"),
+        "last_name" : "Ben Lahmer",
+        "first_name" : "Fares",
+        "email" : "fares@gmail.com",
+        "age" : 26
+}
+{
+        "_id" : ObjectId("600a0296e29cb304782e77b3"),
+        "last_name" : "Kefi",
+        "first_name" : "Seif",
+        "email" : "kefi@gmail.com",
+        "age" : 15
+}
+{
+        "_id" : ObjectId("600a02cae29cb304782e77b4"),
+        "last_name" : "Fatnassi",
+        "first_name" : "Sarra",
+        "email" : "sarra.f@gmail.com",
+        "age" : 40
+}
+{
+        "_id" : ObjectId("600a033be29cb304782e77b5"),
+        "last_name" : "Ben Yahia",
+        "first_name" : "Rym",
+        "age" : 4
+}
+{
+        "_id" : ObjectId("600a0354e29cb304782e77b6"),
+        "last_name" : "Cherif",
+        "first_name" : "Sami",
+        "age" : 3
+}
+> db.contactlis.find({_id: ObjectId("600a0354e29cb304782e77b6")},null)
+{ "_id" : ObjectId("600a0354e29cb304782e77b6"), "last_name" : "Cherif", "first_name" : "Sami", "age" : 3 }
+> db.contactlis.find({age:{$gt: 18}}).pretty()
+{
+        "_id" : ObjectId("600a0250e29cb304782e77b2"),
+        "last_name" : "Ben Lahmer",
+        "first_name" : "Fares",
+        "email" : "fares@gmail.com",
+        "age" : 26
+}
+{
+        "_id" : ObjectId("600a02cae29cb304782e77b4"),
+        "last_name" : "Fatnassi",
+        "first_name" : "Sarra",
+        "email" : "sarra.f@gmail.com",
+        "age" : 40
+}
+
+> db.contactlis.find({$and: [{age:{$gt: 18}},{last_name:/ah/}]}).pretty()
+{
+        "_id" : ObjectId("600a0250e29cb304782e77b2"),
+        "last_name" : "Ben Lahmer",
+        "first_name" : "Fares",
+        "email" : "fares@gmail.com",
+        "age" : 26
+}
+> db.contactlis.update({last_name:'Kefi'},{$set: {first_name:'Anis'}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.contacts.find()
+> db.contactlis.find()
+{ "_id" : ObjectId("600a0250e29cb304782e77b2"), "last_name" : "Ben Lahmer", "first_name" : "Fares", "email" : "fares@gmail.com", "age" : 26 }
+{ "_id" : ObjectId("600a0296e29cb304782e77b3"), "last_name" : "Kefi", "first_name" : "Anis", "email" : "kefi@gmail.com", "age" : 15 }
+{ "_id" : ObjectId("600a02cae29cb304782e77b4"), "last_name" : "Fatnassi", "first_name" : "Sarra", "email" : "sarra.f@gmail.com", "age" : 40 }
+{ "_id" : ObjectId("600a033be29cb304782e77b5"), "last_name" : "Ben Yahia", "first_name" : "Rym", "age" : 4 }
+{ "_id" : ObjectId("600a0354e29cb304782e77b6"), "last_name" : "Cherif", "first_name" : "Sami", "age" : 3 }
+> db.contactlis.remove({age:{$lt: 5}})
+WriteResult({ "nRemoved" : 2 })
+> db.contactlis.find().pretty()
+{
+        "_id" : ObjectId("600a0250e29cb304782e77b2"),
+        "last_name" : "Ben Lahmer",
+        "first_name" : "Fares",
+        "email" : "fares@gmail.com",
+        "age" : 26
+}
+{
+        "_id" : ObjectId("600a0296e29cb304782e77b3"),
+        "last_name" : "Kefi",
+        "first_name" : "Anis",
+        "email" : "kefi@gmail.com",
+        "age" : 15
+}
+{
+        "_id" : ObjectId("600a02cae29cb304782e77b4"),
+        "last_name" : "Fatnassi",
+        "first_name" : "Sarra",
+        "email" : "sarra.f@gmail.com",
+        "age" : 40
+}
+>
+
+
+
+
